@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>SegmaFusion | Login</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+          <link rel="stylesheet"
+      href="{{ url_for('static', filename='loader.css') }}">
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <section class="brand-panel">
+            <div class="brand-logo">
+    <img
+        src="{{ url_for('static', filename='logo.png') }}"
+        alt="SegmaFusion AI Logo"
+        >
+</div>
+
+            <h1>Segma<span>Fusion</span></h1>
+
+            <p class="brand-subtitle">
+                AI-Powered Image Segmentation
+            </p>
+
+            <div class="brand-message">
+                <span class="eyebrow">INTELLIGENCE IN EVERY PIXEL</span>
+
+                <h2>See the world<br>in a different way.</h2>
+
+                <p>
+                    Explore intelligent satellite and medical image
+                    segmentation through one unified platform.
+                </p>
+            </div>
+
+            <div class="brand-footer">
+                SEGMAFUSION AI PLATFORM
+            </div>
+        </section>
+
+        <section class="form-panel">
+
+            <div class="login-card">
+
+                <div class="mobile-logo">SF</div>
+
+                <span class="eyebrow">WELCOME BACK</span>
+
+                <h2>Sign in to your account</h2>
+
+                <p class="form-description">
+                    Enter your credentials to access your workspace.
+                </p>
+
+                <form action="/login" method="POST">
+
+                    <label for="email">Email address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button type="submit" class="primary-button">
+                        Sign In <span>→</span>
+                    </button>
+
+                </form>
+
+                <div class="divider">
+                    <span>SEGMAFUSION WORKSPACE</span>
+                </div>
+
+                <p class="account-text">
+                    Don't have an account?
+                    <a href="/register">Create account</a>
+                </p>
+
+                <p class="security-note">
+                    Secure access to your image analysis workspace.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+{% include 'loader.html' %}
+
+<script src="{{ url_for('static', filename='loader.js') }}"></script>
+</body>
+</html>

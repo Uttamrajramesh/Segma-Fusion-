@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SegmaFusion | Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+          <link rel="stylesheet"
+      href="{{ url_for('static', filename='loader.css') }}">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+     <a href="/dashboard" class="sidebar-brand">
+    <img
+        src="{{ url_for('static', filename='logo.png') }}"
+        alt="SegmaFusion AI Logo"
+        class="sidebar-logo"
+    >
+    <span>Segma<span class="purple-text">Fusion</span></span>
+</a>
+
+            <p class="sidebar-label">WORKSPACE</p>
+
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="nav-item active">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="/satellite" class="nav-item">
+                    <span>◈</span> Satellite AI
+                </a>
+
+                <a href="#medical" class="nav-item">
+                    <span>✳</span> Medical AI
+                    <span class="nav-badge">Soon</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-status">
+                    <span class="status-dot"></span>
+                    <div>
+                        <strong>AI Workspace</strong>
+                        <p>Platform ready</p>
+                    </div>
+                </div>
+
+                <a href="/logout" class="nav-item logout-link">
+                    <span>↪</span> Logout
+                </a>
+            </div>
+
+        </aside>
+
+        <!-- Main content -->
+        <main class="main-content">
+
+            <!-- Top navigation -->
+            <header class="topbar">
+                <div>
+                    <p class="breadcrumb">Workspace / Dashboard</p>
+                    <h2>Overview</h2>
+                </div>
+
+                <div class="topbar-user">
+                    <div class="user-avatar">
+                        {{ session["user_name"][0]|upper }}
+                    </div>
+
+                    <div class="user-details">
+                        <strong>{{ session["user_name"] }}</strong>
+                        <span>SegmaFusion User</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Welcome banner -->
+            <section class="welcome-banner">
+                <div class="welcome-content">
+                    <span class="eyebrow">YOUR AI WORKSPACE</span>
+
+                    <h1>
+                        Welcome back,<br>
+                        <span>{{ session["user_name"] }}.</span>
+                    </h1>
+
+                    <p>
+                        Turn complex images into meaningful insights
+                        with AI-powered segmentation.
+                    </p>
+                </div>
+
+                <div class="banner-decoration">
+                    <div class="orbit orbit-one"></div>
+                    <div class="orbit orbit-two"></div>
+                    <div class="orbit-center">SF</div>
+                </div>
+            </section>
+
+            <!-- Statistics -->
+            <section class="stats-grid">
+
+                <article class="stat-card">
+                    <div class="stat-icon purple-icon">◈</div>
+                    <p>AI MODULES</p>
+                    <h3>02</h3>
+                    <span class="stat-caption">Satellite and Medical</span>
+                </article>
+
+                <a href="{{ url_for('dataset') }}"
+   class="stat-card"
+   style="display: block; color: inherit; text-decoration: none; cursor: pointer;">
+
+    <div class="stat-icon green-icon">▧</div>
+
+    <p>DATASET</p>
+
+    <h3>DeepGlobe</h3>
+
+    <span class="stat-caption">Satellite training dataset</span>
+
+    <span style="display: block; margin-top: 12px; color: #a78bfa;">
+        Explore Dataset →
+    </span>
+
+</a>
+
+                <article class="stat-card">
+                    <div class="stat-icon blue-icon">◎</div>
+                    <p>PLATFORM</p>
+                    <h3>AI Vision</h3>
+                    <span class="stat-caption">Image segmentation workspace</span>
+                </article>
+
+            </section>
+
+            <!-- AI services -->
+            <section class="services-section">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">EXPLORE YOUR TOOLS</p>
+                        <h2>Choose your AI workspace</h2>
+                    </div>
+
+                    <span class="section-count">02 MODULES</span>
+                </div>
+
+                <div class="services-grid">
+
+                    <!-- Satellite -->
+                    <article class="service-card satellite-card">
+
+                        <div class="service-card-top">
+                            <div class="service-icon satellite-icon">◈</div>
+                            <span class="available-badge">
+                                <span class="status-dot"></span>
+                                Primary module
+                            </span>
+                        </div>
+
+                        <h3>Satellite Segmentation</h3>
+
+                        <p class="service-description">
+                            Analyze satellite imagery and identify
+                            land-cover regions using pixel-level AI.
+                        </p>
+
+                        <div class="feature-tags">
+                            <span>U-Net CNN</span>
+                            <span>DeepGlobe</span>
+                            <span>Land Cover</span>
+                        </div>
+
+                        <a href="/satellite" class="service-button">
+                            Open Satellite AI <span>↗</span>
+                        </a>
+
+                    </article>
+
+                    <!-- Medical -->
+                    <article class="service-card medical-card" id="medical">
+
+                        <div class="service-card-top">
+                            <div class="service-icon medical-icon">✳</div>
+                            <span class="coming-badge">Coming soon</span>
+                        </div>
+
+                        <h3>Medical Segmentation</h3>
+
+                        <p class="service-description">
+                            A dedicated workspace for segmenting
+                            relevant structures in supported medical images.
+                        </p>
+
+                        <div class="feature-tags">
+                            <span>Medical Imaging</span>
+                            <span>AI Analysis</span>
+                        </div>
+
+                        <button class="service-button disabled-button"
+                                disabled>
+                            Under development
+                        </button>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+            <footer class="dashboard-footer">
+                <span>SegmaFusion AI Platform</span>
+                <span>Satellite segmentation development workspace</span>
+            </footer>
+
+        </main>
+
+    </div>
+
+     <script src="{{ url_for('static', filename='script.js') }}"></script>
+{% include 'loader.html' %}
+
+<script src="{{ url_for('static', filename='loader.js') }}"></script>
+</body>
+</html>

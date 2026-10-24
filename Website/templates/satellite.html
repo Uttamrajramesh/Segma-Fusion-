@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SegmaFusion | Satellite AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+          <link rel="stylesheet"
+      href="{{ url_for('static', filename='loader.css') }}">
+
+    <style>
+        .satellite-page {
+            min-height: 100vh;
+            background: #08090f;
+            color: #f5f5fa;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        .satellite-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .satellite-sidebar {
+            width: 245px;
+            flex-shrink: 0;
+            padding: 28px 18px;
+            background: #0d0e17;
+            border-right: 1px solid #292a3d;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: 800;
+            margin: 8px 5px 45px;
+        }
+
+        .brand span {
+            color: #a78bfa;
+        }
+
+        .nav-label {
+            color: #85859e;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin: 25px 10px 14px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 14px 13px;
+            margin: 8px 0;
+            border-radius: 10px;
+            color: #b8b8cc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #211b35;
+            color: #c4b5fd;
+        }
+
+        .satellite-main {
+            flex: 1;
+            min-width: 0;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #252637;
+        }
+
+        .breadcrumb {
+            color: #9999b2;
+            font-size: 13px;
+        }
+
+        .topbar h2 {
+            margin: 9px 0 0;
+            font-size: 25px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .profile-icon {
+            display: grid;
+            place-items: center;
+            width: 43px;
+            height: 43px;
+            border-radius: 13px;
+            background: #29203f;
+            color: #c4b5fd;
+            font-weight: 800;
+        }
+
+        .hero {
+            margin-top: 30px;
+            padding: 38px;
+            border: 1px solid #38304f;
+            border-radius: 20px;
+            background: linear-gradient(120deg, #191526, #11121f);
+        }
+
+        .eyebrow {
+            color: #b9a5ff;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.7px;
+        }
+
+        .hero h1 {
+            margin: 18px 0 12px;
+            font-size: clamp(27px, 3vw, 40px);
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: #b0b0c7;
+            line-height: 1.8;
+        }
+
+        .section-heading {
+            margin: 35px 0 18px;
+        }
+
+        .section-heading p {
+            color: #a5a5bc;
+            font-size: 14px;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .workspace-card {
+            padding: 25px;
+            border-radius: 17px;
+            border: 1px solid #292a3d;
+            background: #12131e;
+        }
+
+        .card-icon {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            margin-bottom: 22px;
+            border-radius: 13px;
+            background: #29203f;
+            color: #c4b5fd;
+            font-size: 23px;
+        }
+
+        .workspace-card h3 {
+            font-size: 19px;
+            margin: 0 0 10px;
+        }
+
+        .workspace-card p {
+            color: #a4a4bb;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .action-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 18px;
+            border-radius: 9px;
+            background: #8b5cf6;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background: #7c3aed;
+        }
+
+        .secondary-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 18px;
+            border: 1px solid #39334d;
+            border-radius: 9px;
+            color: #c4b5fd;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .coming-soon {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 7px;
+            background: #29203f;
+            color: #c4b5fd;
+            font-size: 11px;
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            color: #77778e;
+            font-size: 12px;
+        }
+
+        @media (max-width: 850px) {
+            .satellite-sidebar {
+                width: 190px;
+            }
+
+            .satellite-main {
+                padding: 20px;
+            }
+
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .satellite-layout {
+                display: block;
+            }
+
+            .satellite-sidebar {
+                width: auto;
+                padding: 15px;
+                border-right: none;
+                border-bottom: 1px solid #292a3d;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            .nav-label {
+                margin-top: 15px;
+            }
+
+            .satellite-main {
+                padding: 16px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+            }
+
+            .profile {
+                display: none;
+            }
+        }
+        .satellite-brand-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.3));
+}
+    </style>
+</head>
+
+<body class="satellite-page">
+
+<div class="satellite-layout">
+
+    <aside class="satellite-sidebar">
+        <div class="brand">
+    <img
+        src="{{ url_for('static', filename='logo.png') }}"
+        alt="SegmaFusion AI Logo"
+        class="satellite-brand-logo"
+    >
+    <span>SegmaFusion</span>
+</div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <a class="nav-link"
+           href="{{ url_for('dashboard') }}">
+            ▦ &nbsp; Dashboard
+        </a>
+
+        <a class="nav-link active"
+           href="{{ url_for('satellite') }}">
+            ◈ &nbsp; Satellite AI
+        </a>
+
+        <a class="nav-link"
+           href="{{ url_for('dashboard') }}">
+            ✳ &nbsp; Medical AI
+            <span class="coming-soon">Soon</span>
+        </a>
+
+        <div class="nav-label">DATA</div>
+
+        <a class="nav-link"
+           href="{{ url_for('dataset') }}">
+            ▧ &nbsp; DeepGlobe Dataset
+        </a>
+    </aside>
+
+    <main class="satellite-main">
+
+        <header class="topbar">
+            <div>
+                <div class="breadcrumb">Workspace / Satellite AI</div>
+                <h2>Satellite Workspace</h2>
+            </div>
+
+            <div class="profile">
+                <div class="profile-icon">SF</div>
+                <div>
+                    <strong>SegmaFusion</strong><br>
+                    <span style="color:#9999b2;">AI Vision Platform</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="eyebrow">YOUR SATELLITE AI WORKSPACE</div>
+
+            <h1>Understand Earth through AI.</h1>
+
+            <p>
+                Upload satellite imagery, explore the DeepGlobe
+                land-cover dataset, and prepare images for
+                AI-powered semantic segmentation.
+            </p>
+        </section>
+
+        <section class="section-heading">
+            <div class="eyebrow">YOUR TOOLS</div>
+            <h2>Explore your workspace</h2>
+            <p>Select a tool to continue working with satellite imagery.</p>
+        </section>
+
+        <section class="workspace-grid">
+
+            <article class="workspace-card">
+                <div class="card-icon">🛰️</div>
+
+                <h3>Satellite Image Upload</h3>
+
+                <p>
+                    Select an image from your computer and preview it
+                    before uploading it to SegmaFusion.
+                </p>
+
+                <a class="action-button"
+                   href="{{ url_for('upload_image') }}">
+                    Upload Satellite Image →
+                </a>
+            </article>
+
+            <article class="workspace-card">
+                <div class="card-icon">▧</div>
+
+                <h3>DeepGlobe Dataset</h3>
+
+                <p>
+                    Explore satellite training images and their
+                    corresponding ground-truth segmentation masks.
+                </p>
+
+                <a class="secondary-button"
+                   href="{{ url_for('dataset') }}">
+                    Explore Dataset →
+                </a>
+            </article>
+
+        </section>
+
+        <p class="footer-note">
+            SegmaFusion · Satellite Image Segmentation Platform
+        </p>
+
+    </main>
+
+</div>
+{% include 'loader.html' %}
+
+<script src="{{ url_for('static', filename='loader.js') }}"></script>
+</body>
+</html>

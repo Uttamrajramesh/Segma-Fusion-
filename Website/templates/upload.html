@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Upload Satellite Image | SegmaFusion</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+          <link rel="stylesheet"
+      href="{{ url_for('static', filename='loader.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #09090f;
+            color: #f4f4f8;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+
+        .sidebar {
+            width: 245px;
+            min-width: 245px;
+            background: #10101a;
+            border-right: 1px solid #252536;
+            padding: 30px 18px;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: 750;
+            margin: 0 0 8px;
+            color: #ffffff;
+        }
+
+        .brand span {
+            color: #a78bfa;
+        }
+
+        .brand-subtitle {
+            color: #85859a;
+            font-size: 12px;
+            margin-bottom: 38px;
+        }
+
+        .nav-label {
+            color: #74748b;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            margin: 25px 12px 12px;
+        }
+
+        .nav-link {
+            display: block;
+            text-decoration: none;
+            color: #b8b8ca;
+            padding: 13px 14px;
+            border-radius: 10px;
+            margin-bottom: 7px;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #28203f;
+            color: #c4b5fd;
+        }
+
+        /* Main content */
+
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 34px 5%;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 45px;
+        }
+
+        .breadcrumb {
+            color: #9292a8;
+            font-size: 13px;
+        }
+
+        .breadcrumb span {
+            color: #c4b5fd;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #303047;
+            background: #141420;
+            border-radius: 30px;
+            padding: 9px 13px;
+            font-size: 12px;
+            color: #c7c7d8;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #a78bfa;
+        }
+
+        .heading {
+            margin-bottom: 30px;
+        }
+
+        .eyebrow {
+            color: #a78bfa;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: clamp(29px, 4vw, 42px);
+            margin: 0 0 13px;
+            letter-spacing: -1px;
+        }
+
+        .description {
+            color: #9b9bb0;
+            font-size: 15px;
+            line-height: 1.8;
+            max-width: 650px;
+        }
+
+        /* Upload card */
+
+        .upload-card {
+            max-width: 920px;
+            background: linear-gradient(145deg, #151522, #101019);
+            border: 1px solid #2d2a42;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 20px 65px rgba(0, 0, 0, 0.22);
+        }
+
+        .card-heading {
+            font-size: 18px;
+            font-weight: 650;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            color: #9292a8;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .drop-zone {
+            min-height: 270px;
+            border: 1.5px dashed #514174;
+            border-radius: 17px;
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(139, 92, 246, 0.12),
+                    transparent 65%
+                ),
+                #10101b;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .drop-zone:hover,
+        .drop-zone.dragging {
+            border-color: #a78bfa;
+            background-color: #171326;
+            transform: translateY(-2px);
+        }
+
+        .upload-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            background: #28203f;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .drop-title {
+            font-size: 17px;
+            font-weight: 650;
+            margin-bottom: 9px;
+        }
+
+        .drop-description {
+            font-size: 13px;
+            color: #9999ae;
+            line-height: 1.8;
+        }
+
+        .browse {
+            color: #c4b5fd;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .requirements {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .requirement {
+            border: 1px solid #303047;
+            border-radius: 8px;
+            padding: 7px 11px;
+            color: #a8a8bb;
+            font-size: 11px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Preview */
+
+        .preview-box {
+            display: none;
+            margin-top: 25px;
+            border: 1px solid #303047;
+            background: #0d0d16;
+            border-radius: 15px;
+            padding: 17px;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .preview-title {
+            font-size: 14px;
+            font-weight: 650;
+        }
+
+        .remove-button {
+            border: 0;
+            background: transparent;
+            color: #fca5a5;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .preview-image {
+            display: block;
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #08080e;
+        }
+
+        .file-info {
+            color: #a7a7bc;
+            font-size: 12px;
+            margin-top: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        /* Buttons */
+
+        .button-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .primary-button {
+            border: 0;
+            border-radius: 11px;
+            padding: 14px 24px;
+            background: linear-gradient(110deg, #7c3aed, #a855f7);
+            color: white;
+            font-size: 14px;
+            font-weight: 650;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.2);
+            transition: 0.2s;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35);
+        }
+
+        .primary-button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #b4b4c7;
+            font-size: 13px;
+            padding: 12px 15px;
+        }
+
+        .back-link:hover {
+            color: #c4b5fd;
+        }
+
+        /* Flask messages */
+
+        .flash-message {
+            max-width: 920px;
+            margin-bottom: 20px;
+            padding: 13px 16px;
+            border-radius: 10px;
+            background: #211a35;
+            border: 1px solid #49366f;
+            color: #ddd6fe;
+            font-size: 13px;
+        }
+
+        .error-message {
+            display: none;
+            color: #fca5a5;
+            font-size: 13px;
+            margin-top: 14px;
+        }
+
+        .success-panel {
+            max-width: 920px;
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #14231f;
+            border: 1px solid #285646;
+        }
+
+        .success-panel h3 {
+            margin: 0 0 8px;
+            color: #86efac;
+            font-size: 17px;
+        }
+
+        .success-panel p {
+            margin: 0;
+            color: #b4c9bd;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .uploaded-result {
+            max-width: 100%;
+            max-height: 350px;
+            display: block;
+            margin-top: 15px;
+            border-radius: 12px;
+        }
+
+        .footer-note {
+            max-width: 920px;
+            margin-top: 28px;
+            color: #6f6f85;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 760px) {
+            .sidebar {
+                width: 75px;
+                min-width: 75px;
+                padding: 25px 8px;
+            }
+
+            .brand {
+                font-size: 14px;
+                overflow-wrap: anywhere;
+            }
+
+            .brand-subtitle,
+            .nav-label {
+                display: none;
+            }
+
+            .nav-link {
+                font-size: 11px;
+                text-align: center;
+                padding: 12px 4px;
+                overflow-wrap: anywhere;
+            }
+
+            .main {
+                padding: 25px 18px;
+            }
+
+            .topbar {
+                margin-bottom: 35px;
+            }
+
+            .upload-card {
+                padding: 18px;
+            }
+
+            .drop-zone {
+                min-height: 230px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="brand">Segma<span>Fusion</span></div>
+        <div class="brand-subtitle">AI Image Segmentation Platform</div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <a href="{{ url_for('home') }}" class="nav-link">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('satellite') }}" class="nav-link active">
+            Satellite AI
+        </a>
+
+        <a href="{{ url_for('dataset') }}" class="nav-link">
+            Dataset Explorer
+        </a>
+
+        <div class="nav-label">ACCOUNT</div>
+
+        <a href="{{ url_for('logout') }}" class="nav-link">
+            Logout
+        </a>
+
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div class="breadcrumb">
+                Workspace &nbsp;/&nbsp; Satellite AI &nbsp;/
+                <span>Upload Image</span>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                AI Workspace
+            </div>
+        </div>
+
+        <section class="heading">
+
+            <div class="eyebrow">Satellite Intelligence</div>
+
+            <h1>Upload Satellite Image</h1>
+
+            <p class="description">
+                Prepare your satellite imagery for land-cover analysis.
+                Upload an image, preview it, and get it ready for the
+                SegmaFusion segmentation workflow.
+            </p>
+
+        </section>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if uploaded_image %}
+
+            <section class="success-panel">
+                <h3>✓ Image uploaded successfully</h3>
+                <p>
+                    Your image has been uploaded. AI segmentation will be
+                    available after the model-inference feature is connected.
+                </p>
+
+                <img
+                    src="{{ url_for('uploaded_file', filename=uploaded_image) }}"
+                    alt="Uploaded satellite image"
+                    class="uploaded-result"
+                >
+
+                <div class="button-row">
+                    <a href="{{ url_for('upload_image') }}" class="back-link">
+                        Upload Another Image →
+                    </a>
+
+                    <a href="{{ url_for('satellite') }}" class="back-link">
+                        Back to Satellite AI
+                    </a>
+                </div>
+            </section>
+
+        {% else %}
+
+            <section class="upload-card">
+
+                <div class="card-heading">Choose your image</div>
+
+                <div class="card-description">
+                    Upload a satellite image from your computer.
+                    Supported formats: JPG, JPEG, and PNG.
+                </div>
+
+                <form
+                    id="uploadForm"
+                    action="{{ url_for('upload_image') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    <label class="drop-zone" id="dropZone" for="imageInput">
+
+                        <div class="upload-icon">⇧</div>
+
+                        <div class="drop-title">
+                            Drag and drop your image here
+                        </div>
+
+                        <div class="drop-description">
+                            or <span class="browse">browse files</span>
+                            from your computer
+                        </div>
+
+                        <div class="requirements">
+                            <span class="requirement">JPG / JPEG / PNG</span>
+                            <span class="requirement">Maximum 10 MB</span>
+                            <span class="requirement">Satellite imagery</span>
+                        </div>
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                        name="image"
+                        accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+                        required
+                    >
+
+                    <div class="error-message" id="errorMessage"></div>
+
+                    <div class="preview-box" id="previewBox">
+
+                        <div class="preview-header">
+                            <span class="preview-title">Image Preview</span>
+
+                            <button
+                                type="button"
+                                class="remove-button"
+                                id="removeButton"
+                            >
+                                Remove image ✕
+                            </button>
+                        </div>
+
+                        <img
+                            id="previewImage"
+                            class="preview-image"
+                            alt="Selected satellite image preview"
+                        >
+
+                        <div class="file-info" id="fileInfo"></div>
+
+                    </div>
+
+                    <div class="button-row">
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                            id="uploadButton"
+                            disabled
+                        >
+                            Upload Image →
+                        </button>
+
+                        <a
+                            href="{{ url_for('satellite') }}"
+                            class="back-link"
+                        >
+                            ← Back to Satellite AI
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        {% endif %}
+
+        <div class="footer-note">
+            SEGMAFUSION · AI-POWERED IMAGE ANALYSIS<br>
+            Uploading an image does not yet run the segmentation model.
+            The model-inference feature will be connected separately.
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+    const imageInput = document.getElementById("imageInput");
+    const dropZone = document.getElementById("dropZone");
+    const previewBox = document.getElementById("previewBox");
+    const previewImage = document.getElementById("previewImage");
+    const fileInfo = document.getElementById("fileInfo");
+    const uploadButton = document.getElementById("uploadButton");
+    const removeButton = document.getElementById("removeButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const uploadForm = document.getElementById("uploadForm");
+
+    let previewURL = null;
+
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = "block";
+    }
+
+    function clearError() {
+        errorMessage.textContent = "";
+        errorMessage.style.display = "none";
+    }
+
+    function clearPreviewURL() {
+        if (previewURL) {
+            URL.revokeObjectURL(previewURL);
+            previewURL = null;
+        }
+    }
+
+    function displayFile(file) {
+        clearError();
+
+        if (!file) {
+            return;
+        }
+
+        const allowedTypes = ["image/jpeg", "image/png"];
+        const allowedExtensions = /\.(jpg|jpeg|png)$/i;
+
+        if (
+            !allowedTypes.includes(file.type) ||
+            !allowedExtensions.test(file.name)
+        ) {
+            imageInput.value = "";
+            uploadButton.disabled = true;
+            previewBox.style.display = "none";
+            clearPreviewURL();
+            showError("Please select a valid JPG, JPEG, or PNG image.");
+            return;
+        }
+
+        if (file.size > 10 * 1024 * 1024) {
+            imageInput.value = "";
+            uploadButton.disabled = true;
+            previewBox.style.display = "none";
+            clearPreviewURL();
+            showError("The image is too large. Maximum size is 10 MB.");
+            return;
+        }
+
+        clearPreviewURL();
+
+        previewURL = URL.createObjectURL(file);
+        previewImage.src = previewURL;
+
+        const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+
+        fileInfo.textContent = file.name + " · " + sizeMB + " MB";
+
+        previewBox.style.display = "block";
+        uploadButton.disabled = false;
+    }
+
+    imageInput.addEventListener("change", function () {
+        displayFile(this.files[0]);
+    });
+
+    removeButton.addEventListener("click", function () {
+        imageInput.value = "";
+        previewImage.removeAttribute("src");
+        previewBox.style.display = "none";
+        uploadButton.disabled = true;
+        clearPreviewURL();
+        clearError();
+    });
+
+    ["dragenter", "dragover"].forEach(function (eventName) {
+        dropZone.addEventListener(eventName, function (event) {
+            event.preventDefault();
+            dropZone.classList.add("dragging");
+        });
+    });
+
+    ["dragleave", "drop"].forEach(function (eventName) {
+        dropZone.addEventListener(eventName, function (event) {
+            event.preventDefault();
+            dropZone.classList.remove("dragging");
+        });
+    });
+
+    dropZone.addEventListener("drop", function (event) {
+        const files = event.dataTransfer.files;
+
+        if (!files.length) {
+            return;
+        }
+
+        const transfer = new DataTransfer();
+        transfer.items.add(files[0]);
+        imageInput.files = transfer.files;
+
+        displayFile(files[0]);
+    });
+
+    uploadForm.addEventListener("submit", function (event) {
+        if (!imageInput.files.length) {
+            event.preventDefault();
+            showError("Please select an image before uploading.");
+            return;
+        }
+
+        uploadButton.disabled = true;
+        uploadButton.textContent = "Uploading...";
+    });
+</script>
+{% include 'loader.html' %}
+
+<script src="{{ url_for('static', filename='loader.js') }}"></script>
+</body>
+</html>

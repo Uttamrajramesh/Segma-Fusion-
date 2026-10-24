@@ -1,0 +1,191 @@
+<div id="segma-loader" role="status" aria-live="polite">
+
+    <div class="loader-content">
+
+        <div class="brain-scene">
+
+            <svg
+                class="brain-svg"
+                viewBox="0 0 800 500"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+            >
+
+                <defs>
+                    <radialGradient id="brainLight">
+                        <stop offset="0%" stop-color="#f0abff"/>
+                        <stop offset="100%" stop-color="#8b2bd4"/>
+                    </radialGradient>
+
+                    <filter id="brainGlow">
+                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                <!-- Left brain hemisphere -->
+
+                <g filter="url(#brainGlow)">
+
+                    <path class="neural-path bright"
+                        d="M400 100
+                           C340 35 245 70 205 125
+                           C125 150 105 235 145 285
+                           C120 345 185 395 245 375
+                           C285 430 355 385 400 350"/>
+
+                    <path class="neural-path"
+                        d="M395 125
+                           C335 90 260 110 230 165
+                           C175 180 155 240 185 285
+                           C160 330 220 365 270 345
+                           C310 390 360 350 395 320"/>
+
+                    <path class="neural-path slow"
+                        d="M390 150
+                           C320 120 260 165 260 205
+                           C210 225 220 280 250 295
+                           C240 335 300 350 340 320
+                           C360 300 375 300 395 285"/>
+
+                    <path class="neural-path bright"
+                        d="M400 180
+                           C350 145 300 180 315 220
+                           C270 240 285 280 330 275
+                           C350 300 375 275 400 260"/>
+
+                    <!-- Right brain hemisphere -->
+
+                    <path class="neural-path bright"
+                        d="M400 100
+                           C460 35 555 70 595 125
+                           C675 150 695 235 655 285
+                           C680 345 615 395 555 375
+                           C515 430 445 385 400 350"/>
+
+                    <path class="neural-path"
+                        d="M405 125
+                           C465 90 540 110 570 165
+                           C625 180 645 240 615 285
+                           C640 330 580 365 530 345
+                           C490 390 440 350 405 320"/>
+
+                    <path class="neural-path slow"
+                        d="M410 150
+                           C480 120 540 165 540 205
+                           C590 225 580 280 550 295
+                           C560 335 500 350 460 320
+                           C440 300 425 300 405 285"/>
+
+                    <path class="neural-path bright"
+                        d="M400 180
+                           C450 145 500 180 485 220
+                           C530 240 515 280 470 275
+                           C450 300 425 275 400 260"/>
+
+                    <!-- Central neural connections -->
+
+                    <path class="neural-path"
+                        d="M210 210
+                           C280 190 320 235 400 220
+                           C480 205 520 180 590 210"/>
+
+                    <path class="neural-path bright"
+                        d="M170 260
+                           C260 290 320 235 400 270
+                           C480 305 540 270 630 260"/>
+
+                    <path class="neural-path slow"
+                        d="M230 150
+                           C300 210 340 165 400 190
+                           C460 165 500 210 570 150"/>
+
+                    <path class="neural-path"
+                        d="M240 330
+                           C300 300 345 340 400 315
+                           C455 340 500 300 560 330"/>
+
+                    <!-- Brain stem -->
+
+                    <path class="neural-path bright"
+                        d="M370 350
+                           C370 390 385 420 400 450
+                           C415 420 430 390 430 350"/>
+
+                    <!-- Neural connections -->
+
+                    <path class="neural-path"
+                        d="M250 160 L310 220 L350 165 L400 220
+                           L450 165 L490 220 L550 160"/>
+
+                    <path class="neural-path"
+                        d="M180 270 L260 300 L320 270 L400 320
+                           L480 270 L540 300 L620 270"/>
+
+                    <path class="neural-path slow"
+                        d="M300 120 L330 190 L280 250 L340 320
+                           M500 120 L470 190 L520 250 L460 320"/>
+
+                </g>
+
+                <!-- Neural nodes -->
+
+                <g>
+
+                    <circle class="neural-node" cx="205" cy="125" r="4"/>
+                    <circle class="neural-node" cx="260" cy="165" r="4"/>
+                    <circle class="neural-node" cx="310" cy="220" r="5"/>
+                    <circle class="neural-node" cx="350" cy="165" r="4"/>
+                    <circle class="neural-node" cx="400" cy="100" r="6"/>
+                    <circle class="neural-node" cx="400" cy="220" r="5"/>
+                    <circle class="neural-node" cx="450" cy="165" r="4"/>
+                    <circle class="neural-node" cx="490" cy="220" r="5"/>
+                    <circle class="neural-node" cx="540" cy="165" r="4"/>
+                    <circle class="neural-node" cx="595" cy="125" r="4"/>
+
+                    <circle class="neural-node" cx="145" cy="285" r="4"/>
+                    <circle class="neural-node" cx="185" cy="285" r="4"/>
+                    <circle class="neural-node" cx="250" cy="295" r="5"/>
+                    <circle class="neural-node" cx="330" cy="275" r="4"/>
+                    <circle class="neural-node" cx="400" cy="270" r="6"/>
+                    <circle class="neural-node" cx="470" cy="275" r="4"/>
+                    <circle class="neural-node" cx="550" cy="295" r="5"/>
+                    <circle class="neural-node" cx="615" cy="285" r="4"/>
+                    <circle class="neural-node" cx="655" cy="285" r="4"/>
+
+                    <circle class="neural-node" cx="245" cy="375" r="4"/>
+                    <circle class="neural-node" cx="330" cy="320" r="4"/>
+                    <circle class="neural-node" cx="400" cy="350" r="5"/>
+                    <circle class="neural-node" cx="470" cy="320" r="4"/>
+                    <circle class="neural-node" cx="555" cy="375" r="4"/>
+                    <circle class="neural-node" cx="400" cy="450" r="5"/>
+
+                </g>
+
+            </svg>
+
+            <div class="brain-scan"></div>
+
+        </div>
+
+        <div class="loader-brand">
+            SEGMAFUSION
+        </div>
+
+        <div class="loader-title">
+            INITIALIZING AI SYSTEM
+        </div>
+
+        <div class="loader-message">
+            Preparing your workspace
+            <span class="loader-dots">
+                <span>.</span><span>.</span><span>.</span>
+            </span>
+        </div>
+
+    </div>
+
+</div>

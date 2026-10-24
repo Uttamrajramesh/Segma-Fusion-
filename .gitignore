@@ -1,0 +1,41 @@
+# Python virtual environment
+
+.venv/
+venv/
+env/
+
+# VS Code settings
+
+.vscode/
+
+# Dataset
+
+Dataset/
+Dataaset/
+
+# Python cache
+
+**pycache**/
+*.py[cod]
+
+# Local database
+
+Website/segmafusion.db
+Website/uploads/*
+
+# Uploaded images
+
+Website/uploads/*
+
+# Secrets
+
+.env
+.env.*
+
+# Model files
+
+*.h5
+*.keras
+*.pth
+*.pt
+*.onnx
